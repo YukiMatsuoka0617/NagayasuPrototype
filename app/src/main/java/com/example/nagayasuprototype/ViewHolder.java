@@ -7,10 +7,11 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ViewHolder extends RecyclerView.ViewHolder{
+public class ViewHolder extends RecyclerView.ViewHolder {
     private final ImageView imageView;
     private final Button recButton;
     private final Button playButton;
+
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
         imageView = itemView.findViewById(R.id.image);
@@ -18,15 +19,15 @@ public class ViewHolder extends RecyclerView.ViewHolder{
         playButton = itemView.findViewById(R.id.button_play);
     }
 
-    public ImageView getImageView(){
+    public ImageView getImageView() {
         return imageView;
     }
 
-    public Button getRecButton(){
+    public Button getRecButton() {
         return recButton;
     }
 
-    public Button getPlayButton(){
+    public Button getPlayButton() {
         return playButton;
     }
 }

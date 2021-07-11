@@ -1,9 +1,13 @@
 package com.example.nagayasuprototype;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,18 +18,39 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Context mContext;
-    public static ArrayList<Bitmap> bitmapArrayList= new ArrayList<>();
+    public static ArrayList<Bitmap> bitmapArrayList = new ArrayList<>();
+
+    private boolean permissionToRecordAccepted = false;
+    private String[] permissions = {
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_RECORD_AUDIO_PERMISSION:
+                permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+        if (!permissionToRecordAccepted) finish();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+
         mContext = this;
         Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext,MainActivity2.class);
+                Intent intent = new Intent(mContext, MainActivity2.class);
                 startActivity(intent);
             }
         });
@@ -34,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         buttonList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext,MainActivity3.class);
+                Intent intent = new Intent(mContext, MainActivity3.class);
                 startActivity(intent);
             }
         });
@@ -43,17 +68,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("test",""+bitmapArrayList);
-        for (Bitmap bitmap : bitmapArrayList){
-            Log.d("test",""+bitmap.getWidth()+","+bitmap.getHeight());
+        Log.d("test", "" + bitmapArrayList);
+        for (Bitmap bitmap : bitmapArrayList) {
+            Log.d("test", "" + bitmap.getWidth() + "," + bitmap.getHeight());
         }
     }
 
-    public static void setBitmapArrayList(Bitmap bitmap){
+    public static void setBitmapArrayList(Bitmap bitmap) {
         bitmapArrayList.add(bitmap);
     }
 
-    public static ArrayList<Bitmap> getBitmapArrayList(){
-        return  bitmapArrayList;
+    public static ArrayList<Bitmap> getBitmapArrayList() {
+        return bitmapArrayList;
     }
 }

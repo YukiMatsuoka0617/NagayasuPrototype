@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -60,15 +59,15 @@ public class PaintView extends View {
         bmpBack = Bitmap.createBitmap(canvasX, canvasY, Bitmap.Config.ARGB_8888);
         bmpResize = Bitmap.createScaledBitmap(bmp, canvasXResize, canvasYResize, false);
         canvas.drawBitmap(bmpResize,
-                (canvasX-canvasXResize)/2,
-                (canvasY-canvasYResize)/2,
+                (canvasX - canvasXResize) / 2,
+                (canvasY - canvasYResize) / 2,
                 mPaint);
-        canvas.drawRect(startX, startY,endX, endY, mPaint);
+        canvas.drawRect(startX, startY, endX, endY, mPaint);
 
         Canvas c = new Canvas(bmpBack);
         c.drawBitmap(bmpResize,
-                (canvasX-canvasXResize)/2,
-                (canvasY-canvasYResize)/2,
+                (canvasX - canvasXResize) / 2,
+                (canvasY - canvasYResize) / 2,
                 mPaint);
     }
 
@@ -101,7 +100,7 @@ public class PaintView extends View {
         return true;
     }
 
-    public static Bitmap getBitmap(){
+    public static Bitmap getBitmap() {
         return bmpCut;
     }
 

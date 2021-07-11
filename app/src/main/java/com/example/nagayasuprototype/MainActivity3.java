@@ -5,28 +5,32 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.io.IOException;
 
 public class MainActivity3 extends AppCompatActivity {
-    private MediaRecorder mRecorder;
+    public static MediaRecorder mRecorder;
+
+    public static String mFileName;
+    public static MediaPlayer mPlayer;
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        mFileName = getExternalCacheDir().getAbsolutePath();
+        context = this;
 
-        initRecord();
         initRecyclerView();
-
-
-
-
     }
 
-    void initRecyclerView(){
+    void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
 
@@ -41,24 +45,46 @@ public class MainActivity3 extends AppCompatActivity {
         recyclerView.addItemDecoration(itemDecoration);
     }
 
-    void initRecord(){
-        // MediaRecorderのインスタンスを作成
+    public static void startRecord(int i) {
+        String filename = mFileName;
+        filename += "/test" + i + ".3gp";
+
         mRecorder = new MediaRecorder();
-        // マイクからの入力とする
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        // 記録フォーマットを3GPPに設定
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        // 音声コーデックをAMR-NBに設定
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        // 出力ファイルパスを設定
-        mRecorder.setOutputFile("/sdcard/audio_sample.3gp");
+        mRecorder.setOutputFile(filename);
         try {
-            // レコーダーを準備
             mRecorder.prepare();
-        } catch(IllegalStateException e) {
+            mRecorder.start();
+        } catch (IllegalStateException e) {
             e.printStackTrace();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public static void stopRecord() {
+        try {
+            mRecorder.stop();
+            mRecorder.reset();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void startPlay(int position) {
+        String filename = mFileName;
+        filename += "/test" + position + ".3gp";
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(filename);
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            Log.d("test", "prepare() failed");
+        }
+
+    }
+
 }

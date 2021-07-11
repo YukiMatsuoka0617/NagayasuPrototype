@@ -1,32 +1,33 @@
 package com.example.nagayasuprototype;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.internal.ManufacturerUtils;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<ViewHolder>{
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
+public class MyAdapter extends RecyclerView.Adapter<ViewHolder> {
     ArrayList<Bitmap> mBitmapArrayList;
-    Context mContext;
     Activity mActivity;
 
     public MyAdapter(Activity activity, ArrayList<Bitmap> bitmapArrayList) {
-//        mContext = context;
         mActivity = activity;
         mBitmapArrayList = bitmapArrayList;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,22 +43,19 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder>{
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(mActivity)
-                        .setTitle("title")
-                        .setMessage("message")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mActivity.finish();
-                            }
-                        })
+                        .setTitle("Recording")
+                        .setMessage("contents")
+                        .setView(makeView(new BitmapDrawable(mBitmapArrayList.get(position)), position))
+                        .setPositiveButton("BACK", null)
                         .show();
 
             }
         });
+
         holder.getPlayButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MainActivity3.startPlay(position);
             }
         });
     }
@@ -65,5 +63,30 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder>{
     @Override
     public int getItemCount() {
         return mBitmapArrayList.size();
+    }
+
+    View makeView(Drawable drawable, int position) {
+        LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog, (ViewGroup) mActivity.findViewById(R.id.layout));
+
+        ImageView imageView = view.findViewById(R.id.image);
+        imageView.setImageDrawable(drawable);
+
+        Button buttonStart = view.findViewById(R.id.start);
+        buttonStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity3.startRecord(position);
+            }
+        });
+
+        Button buttonStop = view.findViewById(R.id.stop);
+        buttonStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity3.stopRecord();
+            }
+        });
+        return view;
     }
 }

@@ -92,7 +92,7 @@ public class PaintView extends View {
                 invalidate();
                 bmpCut = Bitmap.createBitmap(
                         bmpBack,
-                        (int) startX, (int) startY,
+                        makeUpperLeft(startX, endX), makeUpperLeft(startY, endY),
                         Math.abs((int) (endX - startX)), Math.abs((int) (endY - startY)),
                         null, true);
                 break;
@@ -102,6 +102,14 @@ public class PaintView extends View {
 
     public static Bitmap getBitmap() {
         return bmpCut;
+    }
+
+    private int makeUpperLeft(float start, float end) {
+        if (start > end) {
+            return (int) end;
+        } else {
+            return (int) start;
+        }
     }
 
 }

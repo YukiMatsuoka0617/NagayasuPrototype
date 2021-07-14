@@ -26,7 +26,7 @@ public class MainActivity2 extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.setBitmapArrayList(mPaintView.getBitmap());
+                BitmapManager.getInstance().setBitmapArrayList(mPaintView.getBitmap());
                 mActivity.finish();
             }
         });

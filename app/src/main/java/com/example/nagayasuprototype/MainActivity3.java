@@ -37,7 +37,7 @@ public class MainActivity3 extends AppCompatActivity {
         RecyclerView.LayoutManager rLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(rLayoutManager);
 
-        MyAdapter adapter = new MyAdapter(this, MainActivity.getBitmapArrayList());
+        MyAdapter adapter = new MyAdapter(this, BitmapManager.getInstance().getBitmapArrayList());
         recyclerView.setAdapter(adapter);
 
         RecyclerView.ItemDecoration itemDecoration =

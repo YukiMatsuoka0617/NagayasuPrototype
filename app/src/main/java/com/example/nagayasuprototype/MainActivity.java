@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Context mContext;
-    public static ArrayList<Bitmap> bitmapArrayList = new ArrayList<>();
 
     private boolean permissionToRecordAccepted = false;
     private String[] permissions = {
@@ -68,17 +67,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("test", "" + bitmapArrayList);
-        for (Bitmap bitmap : bitmapArrayList) {
-            Log.d("test", "" + bitmap.getWidth() + "," + bitmap.getHeight());
-        }
-    }
-
-    public static void setBitmapArrayList(Bitmap bitmap) {
-        bitmapArrayList.add(bitmap);
-    }
-
-    public static ArrayList<Bitmap> getBitmapArrayList() {
-        return bitmapArrayList;
     }
 }

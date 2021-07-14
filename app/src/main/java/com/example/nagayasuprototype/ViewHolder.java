@@ -11,12 +11,14 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     private final ImageView imageView;
     private final Button recButton;
     private final Button playButton;
+    private final Button deleteButton;
 
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
         imageView = itemView.findViewById(R.id.image);
         recButton = itemView.findViewById(R.id.button_rec);
         playButton = itemView.findViewById(R.id.button_play);
+        deleteButton = itemView.findViewById(R.id.button_delete);
     }
 
     public ImageView getImageView() {
@@ -29,5 +31,9 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     public Button getPlayButton() {
         return playButton;
+    }
+
+    public Button getDeleteButton() {
+        return deleteButton;
     }
 }

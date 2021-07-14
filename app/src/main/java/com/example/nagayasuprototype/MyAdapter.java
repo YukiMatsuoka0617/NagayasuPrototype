@@ -61,6 +61,15 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> {
                 MediaManager.getInstance(mContext).startPlay(position);
             }
         });
+
+        holder.getDeleteButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notifyItemRemoved(position);
+                notifyDataSetChanged();
+                BitmapManager.getInstance().deleteBitmapArrayList(position);
+            }
+        });
     }
 
     @Override

@@ -25,4 +25,8 @@ public class BitmapManager {
     public ArrayList<Bitmap> getBitmapArrayList() {
         return bitmapArrayList;
     }
+
+    public void deleteBitmapArrayList(int position) {
+        bitmapArrayList.remove(position);
+    }
 }

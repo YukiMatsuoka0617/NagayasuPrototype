@@ -1,6 +1,7 @@
 package com.example.nagayasuprototype;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -22,9 +23,11 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 public class MyAdapter extends RecyclerView.Adapter<ViewHolder> {
     ArrayList<Bitmap> mBitmapArrayList;
     Activity mActivity;
+    Context mContext;
 
-    public MyAdapter(Activity activity, ArrayList<Bitmap> bitmapArrayList) {
+    public MyAdapter(Activity activity, Context context, ArrayList<Bitmap> bitmapArrayList) {
         mActivity = activity;
+        mContext = context;
         mBitmapArrayList = bitmapArrayList;
     }
 
@@ -55,7 +58,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> {
         holder.getPlayButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity3.startPlay(position);
+                MediaManager.getInstance(mContext).startPlay(position);
             }
         });
     }
@@ -76,7 +79,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> {
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity3.startRecord(position);
+                    MediaManager.getInstance(mContext).startRecord(position);
             }
         });
 
@@ -84,7 +87,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> {
         buttonStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity3.stopRecord();
+                        MediaManager.getInstance(mContext).stopRecord();
             }
         });
         return view;

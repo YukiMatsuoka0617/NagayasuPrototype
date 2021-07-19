@@ -12,6 +12,7 @@ import android.view.View;
 
 public class PaintView extends View {
     private Paint mPaint;
+    Paint paint;
     private Path mPath;
     private Bitmap bmp = null;
     private static Bitmap bmpResize = null;
@@ -24,6 +25,8 @@ public class PaintView extends View {
     float startY = 0;
     float endX = 0;
     float endY = 0;
+
+    static int[] vertex;
 
     int canvasX;
     int canvasY;
@@ -45,6 +48,12 @@ public class PaintView extends View {
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(10);
 
+        paint = new Paint();
+        paint.setColor(0xFF00FF00);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setStrokeWidth(5);
+        paint.setTextSize(100);
+
         bmp = BitmapFactory.decodeResource(getResources(), R.drawable.test);
 
     }
@@ -63,12 +72,23 @@ public class PaintView extends View {
                 (canvasY - canvasYResize) / 2,
                 mPaint);
         canvas.drawRect(startX, startY, endX, endY, mPaint);
+        if(MainActivity2.arrayList.size() != 0) {
+            canvas.drawText(String.valueOf(MainActivity2.arrayList.size() + 1), startX, startY + 80, paint);
+        }
+
 
         Canvas c = new Canvas(bmpBack);
         c.drawBitmap(bmpResize,
                 (canvasX - canvasXResize) / 2,
                 (canvasY - canvasYResize) / 2,
                 mPaint);
+
+
+        for (int[] vertex : MainActivity2.arrayList) {
+            canvas.drawRect(vertex[0], vertex[1], vertex[2], vertex[3], mPaint);
+            canvas.drawText(String.valueOf(vertex[4] + 1), vertex[0], vertex[1]+80, paint);
+        }
+
     }
 
     @Override
@@ -89,12 +109,16 @@ public class PaintView extends View {
             case MotionEvent.ACTION_UP:
                 endX = event.getX();
                 endY = event.getY();
-                invalidate();
                 bmpCut = Bitmap.createBitmap(
                         bmpBack,
                         makeUpperLeft(startX, endX), makeUpperLeft(startY, endY),
                         Math.abs((int) (endX - startX)), Math.abs((int) (endY - startY)),
                         null, true);
+
+                vertex = new int[]{makeUpperLeft(startX, endX), makeUpperLeft(startY, endY),
+                        makeUnderRight(startX, endX), makeUnderRight(startY, endY),
+                        MainActivity2.arrayList.size()};
+                invalidate();
                 break;
         }
         return true;
@@ -104,8 +128,20 @@ public class PaintView extends View {
         return bmpCut;
     }
 
+    public static int[] getVertex(){
+        return vertex;
+    }
+
     private int makeUpperLeft(float start, float end) {
         if (start > end) {
+            return (int) end;
+        } else {
+            return (int) start;
+        }
+    }
+
+    private int makeUnderRight(float start, float end) {
+        if (start < end) {
             return (int) end;
         } else {
             return (int) start;

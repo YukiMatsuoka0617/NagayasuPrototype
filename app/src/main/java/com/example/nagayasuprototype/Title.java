@@ -16,7 +16,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class Title extends AppCompatActivity {
     Context mContext;
 
     private boolean permissionToRecordAccepted = false;

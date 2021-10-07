@@ -8,13 +8,10 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.ArrayList;
 
 public class Title extends AppCompatActivity {
     Context mContext;
@@ -49,7 +46,7 @@ public class Title extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, MainActivity2.class);
+                Intent intent = new Intent(mContext, OpenFileViewer.class);
                 startActivity(intent);
             }
         });

@@ -54,7 +54,7 @@ public class PaintView extends View {
         paint.setStrokeWidth(5);
         paint.setTextSize(100);
 
-        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.comic);
+        bmp = OpenFileViewer.getBitmap();
 
     }
 
